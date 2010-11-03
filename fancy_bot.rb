@@ -9,6 +9,7 @@ require "uri"
 FANCY_DIR = ARGV[0]
 FANCY_CMD = "#{FANCY_DIR}/bin/fancy -I #{FANCY_DIR}"
 LOGDIR = ARGV[1] ? ARGV[1] : "."
+API_DOC_DESTDIR = ARGV[2] ? ARGV[2] : nil
 
 class Cinch::Bot
   attr_reader :plugins # hack to allow access to plugins from outside
@@ -189,10 +190,18 @@ bot = Cinch::Bot.new do
       end
     end
 
+    def gen_docs(m)
+      do_cmd(m, "fdoc")
+      if API_DOC_DESTDIR
+        do_cmd(m, "mv doc/api/* #{API_DOC_DESTDIR}")
+      end
+    end
+
     def do_update_build_test(m)
       m.reply "Getting latest changes & trying to run tests."
       return unless fetch_latest_revision m
       return unless try_build m
+      gen_docs m
       run_tests m
     end
   end
