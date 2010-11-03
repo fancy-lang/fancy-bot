@@ -191,9 +191,10 @@ bot = Cinch::Bot.new do
     end
 
     def gen_docs(m)
-      do_cmd(m, "fdoc")
       if API_DOC_DESTDIR
-        do_cmd(m, "mv doc/api/* #{API_DOC_DESTDIR}")
+        do_cmd(m, "bin/fdoc -o #{API_DOC_DESTDIR}")
+      else
+        do_cmd(m, "bin/fdoc")
       end
     end
 
