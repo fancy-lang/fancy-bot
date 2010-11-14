@@ -271,25 +271,26 @@ bot = Cinch::Bot.new do
   end
 
   on :message, /^! (.+)$/ do |m, cmd|
-    begin
-      Timeout::timeout(5) do
+    m.reply "=> Sorry, evaling fancy code is not possible at the moment. Working on it."
+    # begin
+    #   Timeout::timeout(5) do
 
-        disable = ["Kernel", "File", "Directory", "System", "Dir", "IO"]
+    #     disable = ["Kernel", "File", "Directory", "System", "Dir", "IO"]
 
-        disable_str = disable.map{|o| "#{o} = nil; "}.join
+    #     disable_str = disable.map{|o| "#{o} = nil; "}.join
 
-        IO.popen("#{FANCY_CMD} -e \"#{disable_str} #{cmd.gsub(/\"/, "\\\"")}\"", "r") do |o|
-          lines = o.readlines
-          if lines.size <= 5
-            m.reply "=> #{lines.map(&:chomp).join("; ")}"
-          else
-            m.reply "=> #{lines[0..4].map(&:chomp).join("; ")} [...]"
-          end
-        end
-      end
-    rescue Timeout::Error
-      m.reply "=> Your computation took to long! Timeout is set to 5 seconds."
-    end
+    #     IO.popen("#{FANCY_CMD} -e \"#{disable_str} #{cmd.gsub(/\"/, "\\\"")}\"", "r") do |o|
+    #       lines = o.readlines
+    #       if lines.size <= 5
+    #         m.reply "=> #{lines.map(&:chomp).join("; ")}"
+    #       else
+    #         m.reply "=> #{lines[0..4].map(&:chomp).join("; ")} [...]"
+    #       end
+    #     end
+    #   end
+    # rescue Timeout::Error
+    #   m.reply "=> Your computation took to long! Timeout is set to 5 seconds."
+    # end
   end
 
   on :message, /^fancy:(.+)http/ do |m|
