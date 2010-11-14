@@ -18,7 +18,7 @@ end
 class FancyLogger
   include Cinch::Plugin
 
-  listen_to :channel, :me, {:use_prefix => false}
+  listen_to :channel
 
   def log_message(msg)
     time = Time.now
@@ -35,6 +35,7 @@ class FancyLogger
     @logfile ||= File.open("#{LOGDIR}/#fancy_#{Date.today}.txt", "a")
     if @current_date != Date.today
       @logfile.close
+      @current_date = Date.today
       @logfile = File.open("#{LOGDIR}/#fancy_#{Date.today}.txt", "a")
     end
     @logfile
