@@ -125,7 +125,9 @@ bot = Cinch::Bot.new do
       line =~ /^make -C/ ||
       line =~ /^rbx/ ||
       line =~ /^flex/ ||
-      line =~ /^bison/
+      line =~ /^bison/ ||
+      line =~ /^rm / ||
+      line =~ /^mv /
     end
 
     # sends error messages to channel, ignoring any warnings etc that
