@@ -127,7 +127,8 @@ bot = Cinch::Bot.new do
       line =~ /^flex/ ||
       line =~ /^bison/ ||
       line =~ /^rm / ||
-      line =~ /^mv /
+      line =~ /^mv / ||
+      line =~ /^In file included from/
     end
 
     # sends error messages to channel, ignoring any warnings etc that
